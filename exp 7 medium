@@ -1,0 +1,24 @@
+# Remove Stones to Minimize the Total
+class Solution {
+public:
+    int minStoneSum(vector<int>& piles, int k) {
+         std::priority_queue<int> maxHeap(piles.begin(), piles.end()); // Max heap
+        
+        while (k--) {
+            int maxPile = maxHeap.top(); 
+            maxHeap.pop(); // Remove max element
+            maxPile -= maxPile / 2; // Remove floor(maxPile / 2) stones
+            maxHeap.push(maxPile); // Push back the reduced pile
+        }
+
+        // Compute the sum of remaining stones
+        int total = 0;
+        while (!maxHeap.empty()) {
+            total += maxHeap.top();
+            maxHeap.pop();
+        }
+
+        return total;
+
+    }
+};
